@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form, {'attr': {'id': 'mock_form', 'class': 'form-horizontal'}}) }}
+
+    <div class="form-group">
+        {{ form_label(form.method, null, { 'label_attr': {'class': 'col-sm-2'} }) }}
+        <div class="col-sm-3">
+            {{ form_widget(form.method) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.responseStatus, null, { 'label_attr': {'class': 'col-sm-2'} }) }}
+        <div class="col-sm-3">
+            {{ form_widget(form.responseStatus) }}
+        </div>
+    </div>
+
+    <hr>
+
+    {#    {{ form_widget(form.headers.vars.prototype.children.key) }}
+        {{ form_widget(form.headers.vars.prototype.children.value) }}#}
+    <div class="form-group">
+        {{ form_label(form.headers, null, { 'label_attr': {'class': 'col-sm-2'} }) }}
+        <ul id="headers_list" class="headers" data-prototype="
+            {% filter escape %}
+                {{ include(':prototypes:header_prototype.html.twig', { 'form': form.headers.vars.prototype  }) }}
+            {% endfilter %}"
+            style="-webkit-padding-start: 0px;">
+            {% for header in form.headers %}
+                <li class="row">
+                    <div class="col-sm-3">
+                        {{ form_widget(header.headerKey, {'label': false, 'attr': {'placeholder': "Key"} }) }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ form_widget(header.headerValue, {'label': false, 'attr': {'placeholder': "Value"} }) }}
+                    </div>
+                    <button id="add_header_button" type="button" class="btn btn-success btn-circle">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+        {{ form_label(form.body, null, { 'label_attr': {'class': 'col-sm-2'} }) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.body, {'attr': {'rows': "15"} }) }}
+        </div>
+    </div>
+
+    {{ form_widget(form._token) }}
+
+    {{ form_end(form, {'render_rest': false}) }}
+
+    <div class="span7 text-center">
+        <input type="button" id="submit_form_button" value="Generate" class="btn-success btn">
+    </div>
+{% endblock %}

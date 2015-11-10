@@ -1,0 +1,12 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    mock_service:
+        class: AppBundle\Service\MockService
+        arguments: [ "@doctrine.orm.entity_manager", "@utils" ]
+
+    utils:
+        class: AppBundle\Utils\Utils
